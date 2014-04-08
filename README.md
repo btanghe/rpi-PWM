@@ -55,23 +55,25 @@ line 864:
 
 Using the driver
 
-## export the pwm
+## Export the pwm channel
 	echo 0 > /sys/class/pwm/pwmchip0/export			
 	cd /sys/class/pwm/pwmchip0/pwm0/
 
-## set the duty cycle and period (minimum period is 1us)
+## Set the duty cycle and period 
+
+	!!!(minimum period is 1us)
 
 	echo 100000 > duty_cycle	//duty cycle is 100us
 	echo 30000  > period		//period of 30 us
 	echo 1 > enable
 
-## change polarity
+## Inverse polarity
 
 	echo 0 > enable			//disable the pwm channel
 	echo inversed > polarity
 	echo 1 > enable			//enable the pwm channel
 
-## back to normal
+## Back to normal mode
 
 	echo 0 > enable
 	echo normal > polarity
