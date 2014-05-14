@@ -1,7 +1,7 @@
 rpi-PWM
 =======
 
-linux pwm driver using raspberry pi pin 18 - expansion header 12
+linux pwm driver using raspberry pi pin 18 - expansion header pin 12
 
 This is a raspberry pi linux device driver using the linux pwm subsystem
 (I've tested on linux kernel 3.11, 3.13 and 3.14)
@@ -81,10 +81,11 @@ Using the driver
 
 Some additional information
 
-Because the memory mapped io registers of the bcm2835 pwm hardware are spreaded 
-over the memory mapped io, 
-gpio config 0x20200004 - clk config 0x201010A0 - pwm configuration 0x2020C000
-I've used the base address of the memory mapped io 
-so I can use positive offsets
+This driver doesn't change the pin configuration of the pin and 
+doesn't change the pwm clock divider. You can use the pinmux and the 
+clock subsystem of the linux kernel. If you want to do is quick and durty,
+you can use the /dev/mem implementation of http://www.airspayce.com/mikem/bcm2835/
+with this 2 lines (1Mhz pwm clock) 
 
-this give some nasty stuff in for instance, /proc/iomem
+	bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_ALT5);
+	bcm2835_pwm_set_clock(19);		
